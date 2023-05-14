@@ -4,11 +4,43 @@
   
     
     <entry>
+      <title>有关rsa</title>
+      <link href="/2023/05/14/%E6%9C%89%E5%85%B3rsa/"/>
+      <url>/2023/05/14/%E6%9C%89%E5%85%B3rsa/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Rsa基础知识"><a href="#Rsa基础知识" class="headerlink" title="Rsa基础知识"></a>Rsa基础知识</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rsa是经常出现在ctf考题中的一类题，它是基于大素因数分解难题产生的公钥密码</span><br></pre></td></tr></table></figure><h2 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h2><h3 id="素数"><a href="#素数" class="headerlink" title="素数"></a>素数</h3><p>除了1和其本身，不能被其他数整除的数叫做素数</p><h3 id="模运算"><a href="#模运算" class="headerlink" title="模运算"></a>模运算</h3><ul><li><p>准备两个非常大的素数$p,q$</p></li><li><p>计算$n&#x3D;p*q$</p></li><li><p>计算$\varphi(n)$，由于$p，q$都是素数，所以$\varphi(n)&#x3D;\varphi(p)*\varphi(q)$，根据数论基础知识，$\varphi(p)&#x3D;p-1，\varphi(q)&#x3D;q-1$</p></li><li><p>选取公钥$e$与$\varphi(n)$互素</p></li><li><p>求得私钥$d$，$d*e\equiv1\mod n$</p></li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>buu刷题记录1</title>
+      <link href="/2023/05/14/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%951/"/>
+      <url>/2023/05/14/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%951/</url>
+      
+        <content type="html"><![CDATA[<h1 id="刷题记录"><a href="#刷题记录" class="headerlink" title="刷题记录"></a>刷题记录</h1>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 刷题记录 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>奇奇怪怪的密码</title>
       <link href="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/"/>
       <url>/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/</url>
       
-        <content type="html"><![CDATA[<p>做密码题或者杂项题老是遇到一些奇奇怪怪的密码，记录一下积累的密码</p><h1 id="1-图形密码"><a href="#1-图形密码" class="headerlink" title="1.图形密码"></a>1.图形密码</h1><h2 id="猪圈密码"><a href="#猪圈密码" class="headerlink" title="猪圈密码"></a>猪圈密码</h2><p>这个很常见，直接贴图</p><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/%E7%8C%AA%E5%9C%88%E5%AF%86%E7%A0%81.jpg" alt="猪圈密码"></p><h2 id="圣堂武士密码-猪圈变形1"><a href="#圣堂武士密码-猪圈变形1" class="headerlink" title="圣堂武士密码-猪圈变形1"></a>圣堂武士密码-猪圈变形1</h2><p>猪圈密码的变形</p><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/%E5%9C%A3%E5%A0%82.jpg" alt="圣堂武士"></p><h2 id="银河密码"><a href="#银河密码" class="headerlink" title="银河密码"></a>银河密码</h2><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/%E9%93%B6%E6%B2%B3.jpg" alt="银河"></p><h2 id="福尔摩斯–跳舞的小人"><a href="#福尔摩斯–跳舞的小人" class="headerlink" title="福尔摩斯–跳舞的小人"></a>福尔摩斯–跳舞的小人</h2><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/%E8%B7%B3%E8%88%9E.jpg" alt="跳舞"></p><h2 id="精灵语"><a href="#精灵语" class="headerlink" title="精灵语"></a>精灵语</h2><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/%E7%B2%BE%E7%81%B5%E8%AF%AD.png" alt="精灵语"></p>]]></content>
+        <content type="html"><![CDATA[<p>做密码题或者杂项题老是遇到一些奇奇怪怪的密码，记录一下积累的密码</p><h1 id="1-图形密码"><a href="#1-图形密码" class="headerlink" title="1.图形密码"></a>1.图形密码</h1><h2 id="猪圈密码"><a href="#猪圈密码" class="headerlink" title="猪圈密码"></a>猪圈密码</h2><p>这个很常见，直接贴图</p><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/%E7%8C%AA%E5%9C%88%E5%AF%86%E7%A0%81.jpg" alt="猪圈密码"></p><h2 id="圣堂武士密码-猪圈变形1"><a href="#圣堂武士密码-猪圈变形1" class="headerlink" title="圣堂武士密码-猪圈变形1"></a>圣堂武士密码-猪圈变形1</h2><p>猪圈密码的变形</p><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/%E5%9C%A3%E5%A0%82.jpg" alt="圣堂武士"></p><h2 id="银河密码"><a href="#银河密码" class="headerlink" title="银河密码"></a>银河密码</h2><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/%E9%93%B6%E6%B2%B3.jpg" alt="银河"></p><h2 id="福尔摩斯–跳舞的小人"><a href="#福尔摩斯–跳舞的小人" class="headerlink" title="福尔摩斯–跳舞的小人"></a>福尔摩斯–跳舞的小人</h2><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/%E8%B7%B3%E8%88%9E.jpg" alt="跳舞"></p><h2 id="精灵语"><a href="#精灵语" class="headerlink" title="精灵语"></a>精灵语</h2><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/%E7%B2%BE%E7%81%B5%E8%AF%AD.png" alt="精灵语"></p><h1 id="猪圈变形2"><a href="#猪圈变形2" class="headerlink" title="猪圈变形2"></a>猪圈变形2</h1><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/hexo_workplace\source_posts\奇奇怪怪的密码\猪圈2.png" alt="猪圈2"></p><h1 id="猪圈变形3"><a href="#猪圈变形3" class="headerlink" title="猪圈变形3"></a>猪圈变形3</h1><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/hexo_workplace\source_posts\奇奇怪怪的密码\猪圈3.png" alt="猪圈3"></p><h1 id="夏多密码"><a href="#夏多密码" class="headerlink" title="夏多密码"></a>夏多密码</h1><p><img src="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/hexo_workplace\source_posts\奇奇怪怪的密码\夏多.png" alt="夏多"></p>]]></content>
       
       
       
