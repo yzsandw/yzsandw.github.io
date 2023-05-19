@@ -167,9 +167,9 @@
   let ele = document.createElement('script')
   ele.setAttribute('id', 'utterances_comment')
   ele.setAttribute('src', 'https://utteranc.es/client.js')
-  ele.setAttribute('repo', 'yzsandw/yzsandw')
+  ele.setAttribute('repo', 'yzsandw/yzsandw.github.io')
   ele.setAttribute('issue-term', 'pathname')
-  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'github-light'
   ele.setAttribute('theme', nowTheme)
   ele.setAttribute('crossorigin', 'anonymous')
   ele.setAttribute('async', 'true')
@@ -179,7 +179,7 @@
 function utterancesTheme () {
   const iframe = document.querySelector('.utterances-frame')
   if (iframe) {
-    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'github-light'
     const message = {
       type: 'set-theme',
       theme: theme
