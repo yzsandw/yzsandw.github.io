@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>零信任</title>
+      <link href="/2023/07/10/%E9%9B%B6%E4%BF%A1%E4%BB%BB/"/>
+      <url>/2023/07/10/%E9%9B%B6%E4%BF%A1%E4%BB%BB/</url>
+      
+        <content type="html"><![CDATA[<p>最近在学零信任相关的知识，给记录下来方便以后查阅</p><h1 id="iptables原理"><a class="markdownIt-Anchor" href="#iptables原理"></a> IpTables原理</h1><p>iptables就是linux中的防火墙工具，其中的四表五链比较重要，并且用了c的底层编写。</p><h2 id="四表"><a class="markdownIt-Anchor" href="#四表"></a> 四表</h2><h3 id="filter过滤表"><a class="markdownIt-Anchor" href="#filter过滤表"></a> filter(过滤表)</h3><p>包含三个规则链</p><ul><li>INPUT 输入链,处理目标地址为本机 IP 地址的报文。</li><li>OUTPUT 输出链,处理本机 IP 地址产生的报文。</li><li>FORWARD 转发链,处理经过本机路由的报文。</li></ul><p>经过本机转发的报文经过 FORWARD 链,不经过 IPPUT 链和 OUTPUT 链。</p><h3 id="nat网络地址转换表"><a class="markdownIt-Anchor" href="#nat网络地址转换表"></a> nat(网络地址转换表)</h3><p>先科普一下网络地址转换是什么</p><p>NAT的主要功能是将源IP地址和/或目标IP地址在数据包经过网络边界设备（如路由器或防火墙）时进行转换。这种转换可以在不同层级上进行，包括网络层（IP地址转换）和传输层（端口转换）。</p><ol><li>源地址转换（Source NAT，SNAT）：将私有网络内部主机的源IP地址转换为公共网络上的一个IP地址。这允许私有网络中的主机通过共享单个公共IP地址来访问互联网。</li><li>目标地址转换（Destination NAT，DNAT）：将公共网络上的目标IP地址转换为私有网络内部主机的一个IP地址。这允许从公共网络访问特定服务或应用程序时，将流量定向到私有网络中的特定主机或服务器。</li><li>端口地址转换（Port Address Translation，PAT）：在NAT过程中同时转换IP地址和端口号。通过在传输层级别上对端口号进行转换，可以将多个私有网络主机共享单个公共IP地址。</li></ol><p>nat 用来完成源/目的地址和端口的转换,当一个报文在创建一个新的连接时进入该表。<br>它也有 3 个内置规则链。</p><ul><li>PREROUTING:用于修改到来的报文,只用来做网络地址转换。</li><li>OUTPUT:用于修改本机产生的并且在路由处理之前的报文。</li><li>POSTROUTING:用于对转换后的数据包进行进一步处理，比如修改数据包的源地址、源端口。</li></ul><h4 id="疑问为什么nat不能用于报文过滤和报文修改"><a class="markdownIt-Anchor" href="#疑问为什么nat不能用于报文过滤和报文修改"></a> 疑问：为什么nat不能用于报文过滤和报文修改？</h4><p><font color="Red">nat表不能用于报文过滤和报文修改,因为每一个连接流仅有一次机会进入该表中的规则链。</font> 看不懂</p><h2 id="mangle修改表"><a class="markdownIt-Anchor" href="#mangle修改表"></a> mangle(修改表)</h2><p>这个表主要用来进行报文修改,有 5 个内置规则链。</p><ul><li>PREROUTING：针对到来的报文,在路由之前修改的地方。</li><li>INPUT：针对目的地址为网关本身的报文。</li><li>FORWARD：针对通过网关路由转发的报文。</li><li>POSTROUTING：将要发送出去的报文的地方。</li><li>OUTPUT：本机产生报文在路由之前修改的地方。</li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 零信任 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>misc</title>
       <link href="/2023/07/08/misc/"/>
       <url>/2023/07/08/misc/</url>
