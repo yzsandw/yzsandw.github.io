@@ -16,7 +16,7 @@
   localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -176,13 +176,9 @@
 <p>共一行，输出能生成的数字个数。</p>
 <h3 id="样例-1">样例 #1</h3>
 <h4 id="样例输入-1">样例输入 #1</h4>
-<pre><code>234 2
-2 5
-3 6
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">234 2<br>2 5<br>3 6<br></code></pre></td></tr></table></figure>
 <h4 id="样例输出-1">样例输出 #1</h4>
-<pre><code>4
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">4<br></code></pre></td></tr></table></figure>
 <h3 id="提示">提示</h3>
 <p>对于 $100%$ 数据，满足 $n \lt 10^{30}$，$k \le 15$。</p>
 <p><strong>【题目来源】</strong></p>
@@ -192,130 +188,20 @@
 <p>之后看了大佬题解（大佬不愧是大佬，思路非常之清晰且简易），发现这道题就是一个图的遍历搜索和高精度乘法，学到了很精妙的分析问题的方法，特此记录一下。</p>
 <p>这道题目本质上是一个排列组合，求出每个数字能转换成其他多少种数字，之后对在该大数内的每个数字的转换种类数相乘即可。这时候就会发现求</p>
 <p>首先是Floyd算法，这里不多赘述，自行搜索学习即可，这里是用Floyd算法来判断两点之间是否有通路，来看这个题的输入和描述，其实就是一个有向图的输入，从一个数字能到达另一个数字就相当于两点之间有单向通路。</p>
-<pre><code class="language-c++">//把每一个数字都当成中间节点
-for(int k = 0; k &lt;= 9; k++)
-&#123;
-    //遍历起始点
-    for(int i = 0; i &lt;= 9; i++)
-    &#123;
-        //尝试到达的点
-        for(int j = 0; j &lt;= 9; j++)
-        &#123;
-            //如果能够到达就标记
-            if(dis[i][j] || (dis[i][k]&amp;&amp;dis[k][j]))
-                dis[i][j]=1;
-        &#125;
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//把每一个数字都当成中间节点</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= <span class="hljs-number">9</span>; k++)<br>&#123;<br>    <span class="hljs-comment">//遍历起始点</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">9</span>; i++)<br>    &#123;<br>        <span class="hljs-comment">//尝试到达的点</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= <span class="hljs-number">9</span>; j++)<br>        &#123;<br>            <span class="hljs-comment">//如果能够到达就标记</span><br>            <span class="hljs-keyword">if</span>(dis[i][j] || (dis[i][k]&amp;&amp;dis[k][j]))<br>                dis[i][j]=<span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>之后由于数据过大，乘出来的数会爆longlong，高精度乘高精度又不会，但是仔细想一下发现可以写成高精度乘以低精度，之前在Acwing看的模板，直接贴上来：</p>
-<pre><code class="language-c++">//高精度乘低精度
-// C = A * b, A &gt;= 0, b &gt;= 0
-vector&lt;int&gt; mul(vector&lt;int&gt; &amp;A, int b)
-&#123;
-    vector&lt;int&gt; C;
-
-    int t = 0;
-    for (int i = 0; i &lt; A.size() || t; i ++ )
-    &#123;
-        if (i &lt; A.size()) t += A[i] * b;
-        C.push_back(t % 10);
-        t /= 10;
-    &#125;
-
-    while (C.size() &gt; 1 &amp;&amp; C.back() == 0) C.pop_back();
-
-    return C;
-&#125;
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//高精度乘低精度</span><br><span class="hljs-comment">// C = A * b, A &gt;= 0, b &gt;= 0</span><br><span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">mul</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt; &amp;A, <span class="hljs-type">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    vector&lt;<span class="hljs-type">int</span>&gt; C;<br><br>    <span class="hljs-type">int</span> t = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; A.<span class="hljs-built_in">size</span>() || t; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">if</span> (i &lt; A.<span class="hljs-built_in">size</span>()) t += A[i] * b;<br>        C.<span class="hljs-built_in">push_back</span>(t % <span class="hljs-number">10</span>);<br>        t /= <span class="hljs-number">10</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">while</span> (C.<span class="hljs-built_in">size</span>() &gt; <span class="hljs-number">1</span> &amp;&amp; C.<span class="hljs-built_in">back</span>() == <span class="hljs-number">0</span>) C.<span class="hljs-built_in">pop_back</span>();<br><br>    <span class="hljs-keyword">return</span> C;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>之后就是一些细节问题了</p>
 <ul>
 <li>
 <p>Floyd自己到自己实际上是无效，改为0</p>
-<pre><code class="language-c++">for(i=0;i&lt;=9;i++)
-		dis[i][i]=0;
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;=<span class="hljs-number">9</span>;i++)<br>		dis[i][i]=<span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
 </li>
 <li>
 <p>高精度逆序输出</p>
 </li>
 </ul>
-<pre><code class="language-c++">#include&lt;iostream&gt;
-#include&lt;string.h&gt;
-#include&lt;vector&gt;
-using namespace std;
-string n;
-int dis[11][11]=&#123;0&#125;, t[11];
-vector&lt;int&gt; A;
-
-void floyd()
-&#123;
-	for(int k = 0; k &lt;= 9; k++)
-	&#123;
-		for(int i = 0; i &lt;= 9; i++)
-		&#123;
-			for(int j = 0; j &lt;= 9; j++)
-			&#123;
-				if(dis[i][j] || (dis[i][k]&amp;&amp;dis[k][j]))
-				dis[i][j]=1;
-			&#125;
-		&#125;
-	&#125;
-&#125;
-
-vector&lt;int&gt; mul(vector&lt;int&gt; A, int b)
-&#123;
-	vector&lt;int&gt; C;
-	int t = 0;
-	for(int i = 0; i &lt; A.size() || t; i++)
-	&#123;
-		if(i &lt; A.size()) t+=A[i]*b;
-		C.push_back(t%10);
-		t/=10;
-	&#125;
-	while(C.back()==0&amp;&amp;C.size()&gt;1) C.pop_back();
-	return C;
-&#125;
-int main()
-&#123;
-	int k;
-	cin &gt;&gt; n &gt;&gt; k;
-	int len = n.length();
-	int a,b;
-	int i,j;
-	for(i = 0; i &lt; k; i++)
-	&#123;
-		cin &gt;&gt; a &gt;&gt; b;
-		dis[a][b]=1;
-	&#125;
-	floyd();
-	for(i=0;i&lt;=9;i++)
-		dis[i][i]=0;
-	int time;
-	for(i = 0; i &lt;= 9; i++)
-	&#123;
-		time = 1;
-		for(j = 0; j &lt;= 9; j++)
-		&#123;
-			if(dis[i][j])
-			time++;
-		&#125;
-		t[i]=time;
-	&#125;
-	
-	A.push_back(1);
-	for(i = 0; i &lt; len; i++)
-	&#123;
-		if(t[n[i]-'0'])
-			A=mul(A,t[n[i]-'0']);
-	&#125;
-	for(i = A.size()-1; i &gt;= 0; i--)
-	&#123;
-		cout &lt;&lt; A[i];
-	&#125;
-	return 0;
-&#125;
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br>string n;<br><span class="hljs-type">int</span> dis[<span class="hljs-number">11</span>][<span class="hljs-number">11</span>]=&#123;<span class="hljs-number">0</span>&#125;, t[<span class="hljs-number">11</span>];<br>vector&lt;<span class="hljs-type">int</span>&gt; A;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">floyd</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt;= <span class="hljs-number">9</span>; k++)<br>	&#123;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">9</span>; i++)<br>		&#123;<br>			<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= <span class="hljs-number">9</span>; j++)<br>			&#123;<br>				<span class="hljs-keyword">if</span>(dis[i][j] || (dis[i][k]&amp;&amp;dis[k][j]))<br>				dis[i][j]=<span class="hljs-number">1</span>;<br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br><br><span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">mul</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt; A, <span class="hljs-type">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>	vector&lt;<span class="hljs-type">int</span>&gt; C;<br>	<span class="hljs-type">int</span> t = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; A.<span class="hljs-built_in">size</span>() || t; i++)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(i &lt; A.<span class="hljs-built_in">size</span>()) t+=A[i]*b;<br>		C.<span class="hljs-built_in">push_back</span>(t%<span class="hljs-number">10</span>);<br>		t/=<span class="hljs-number">10</span>;<br>	&#125;<br>	<span class="hljs-keyword">while</span>(C.<span class="hljs-built_in">back</span>()==<span class="hljs-number">0</span>&amp;&amp;C.<span class="hljs-built_in">size</span>()&gt;<span class="hljs-number">1</span>) C.<span class="hljs-built_in">pop_back</span>();<br>	<span class="hljs-keyword">return</span> C;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> k;<br>	cin &gt;&gt; n &gt;&gt; k;<br>	<span class="hljs-type">int</span> len = n.<span class="hljs-built_in">length</span>();<br>	<span class="hljs-type">int</span> a,b;<br>	<span class="hljs-type">int</span> i,j;<br>	<span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; k; i++)<br>	&#123;<br>		cin &gt;&gt; a &gt;&gt; b;<br>		dis[a][b]=<span class="hljs-number">1</span>;<br>	&#125;<br>	<span class="hljs-built_in">floyd</span>();<br>	<span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;=<span class="hljs-number">9</span>;i++)<br>		dis[i][i]=<span class="hljs-number">0</span>;<br>	<span class="hljs-type">int</span> time;<br>	<span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">9</span>; i++)<br>	&#123;<br>		time = <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>; j &lt;= <span class="hljs-number">9</span>; j++)<br>		&#123;<br>			<span class="hljs-keyword">if</span>(dis[i][j])<br>			time++;<br>		&#125;<br>		t[i]=time;<br>	&#125;<br>	<br>	A.<span class="hljs-built_in">push_back</span>(<span class="hljs-number">1</span>);<br>	<span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; len; i++)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(t[n[i]-<span class="hljs-string">&#x27;0&#x27;</span>])<br>			A=<span class="hljs-built_in">mul</span>(A,t[n[i]-<span class="hljs-string">&#x27;0&#x27;</span>]);<br>	&#125;<br>	<span class="hljs-keyword">for</span>(i = A.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>	&#123;<br>		cout &lt;&lt; A[i];<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 </article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://yzsandw.com">yz的博客</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yzsandw.com/2023/05/20/%E8%93%9D%E6%A1%A5%E6%9D%AF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">http://yzsandw.com/2023/05/20/蓝桥杯刷题记录/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yzsandw.com" target="_blank">Welcom</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.postimg.cc/SsrHG3pr/preview.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/07/08/misc/" title="misc"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">misc</div></div></a></div><div class="next-post pull-right"><a href="/2023/05/19/D-H%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E5%8D%8F%E8%AE%AE%E4%B8%8EEIGamal%E7%AE%97%E6%B3%95/" title="D-H密钥协商协议与EIGamal算法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">D-H密钥协商协议与EIGamal算法</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Utterances</span><span class="switch-btn"></span><span class="second-comment">Gitalk</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.postimg.cc/SsrHG3pr/preview.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">yz的博客</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎大家指出文章错误到邮箱:yzsandw@gmail.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">洛谷</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#P1037-NOIP2002-%E6%99%AE%E5%8F%8A%E7%BB%84-%E4%BA%A7%E7%94%9F%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">P1037 [NOIP2002 普及组] 产生数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.1.2.</span> <span class="toc-text">输入格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">输出格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B-1"><span class="toc-number">1.1.4.</span> <span class="toc-text">样例 #1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B%E8%BE%93%E5%85%A5-1"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">样例输入 #1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B%E8%BE%93%E5%87%BA-1"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">样例输出 #1</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA"><span class="toc-number">1.1.5.</span> <span class="toc-text">提示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E8%A7%A3%E6%9E%90"><span class="toc-number">1.1.6.</span> <span class="toc-text">题目解析</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/22/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" title="数据库系统概论">数据库系统概论</a><time datetime="2023-11-22T07:46:31.000Z" title="发表于 2023-11-22 15:46:31">2023-11-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/02/vps%E6%90%AD%E5%BB%BA%E8%87%AA%E7%94%A8%E8%8A%82%E7%82%B9/" title="vps搭建自用节点">vps搭建自用节点</a><time datetime="2023-11-02T13:18:30.000Z" title="发表于 2023-11-02 21:18:30">2023-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/31/%E6%97%B6%E6%8E%A7%E6%80%A7%E5%8A%A0%E5%AF%86%E7%9A%84%E5%AE%9E%E7%8E%B0/" title="时控性加密的实现">时控性加密的实现</a><time datetime="2023-10-31T07:08:25.000Z" title="发表于 2023-10-31 15:08:25">2023-10-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/10/%E9%9B%B6%E4%BF%A1%E4%BB%BB/" title="零信任">零信任</a><time datetime="2023-07-10T08:42:29.000Z" title="发表于 2023-07-10 16:42:29">2023-07-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/08/misc/" title="misc">misc</a><time datetime="2023-07-08T10:01:15.000Z" title="发表于 2023-07-08 18:01:15">2023-07-08</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/img3.webp')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By yz的博客</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
   document.querySelectorAll('#article-container span.katex-display').forEach(item => {
     btf.wrap(item, 'div', { class: 'katex-wrap'})

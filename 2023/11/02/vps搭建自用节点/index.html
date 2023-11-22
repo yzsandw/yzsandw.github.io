@@ -19,7 +19,7 @@
   localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -194,8 +194,7 @@
 <p>想换密码的可以输入passwd直接更换密码，更换密码之后在该ssh连接的设置中也要相应更改用户身份验证的密码，这里就不演示了。我们输入apt-get update命令，如果没有root权限要先输入su然后输入密码进入root：</p>
 <p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/%E5%9B%BE5.png" alt="图5"></p>
 <p>之后使用脚本一键安装：</p>
-<pre><code>bash &lt;(wget -qO- -o- https://git.io/v2ray.sh)
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">bash &lt;(wget -qO- -o- https://git.io/v2ray.sh)<br></code></pre></td></tr></table></figure>
 <p>执行结果如下：</p>
 <p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/%E5%9B%BE6.png" alt="图6"></p>
 <p>之后输入v2ray，进入管理界面，输入1添加一个配置：</p>
@@ -211,8 +210,7 @@
 <h2 id="启用bbr加速">启用bbr加速</h2>
 <p>如果你得网络很卡顿，延迟比较高的话，那你可以试试bbr加速，或许可以有改善。</p>
 <p>bbr一键脚本：</p>
-<pre><code>wget -N --no-check-certificate &quot;https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh&quot; &amp;&amp; chmod +x tcp.sh &amp;&amp; ./tcp.sh
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">wget -N --no-check-certificate &quot;https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh&quot; &amp;&amp; chmod +x tcp.sh &amp;&amp; ./tcp.sh<br></code></pre></td></tr></table></figure>
 <p>这个脚本包含bbr/bbr魔改版/bbrplus/锐速，多个加速可以选择，这里我们选择2.bbrplus：</p>
 <p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/%E5%9B%BE13.png" alt="图13"></p>
 <p>有的会出现这种界面，这时候输入右方向键选择No：</p>
@@ -221,8 +219,7 @@
 <p>输入y重启，重启之后要双击这左边的这个红红的重新建立连接。</p>
 <p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/image-20231103180146919.png" alt="image-20231103180146919"></p>
 <p>之后使用</p>
-<pre><code>./tcp.sh
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">./tcp.sh<br></code></pre></td></tr></table></figure>
 <p>重新运行脚本，选择7开启bbrplus加速。</p>
 <p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/%E5%9B%BE16.png" alt="图16"></p>
 <p>到这里所有工作已经做完了，右键v2rayN客户端的小图标，选择自动配置即可科学上网了，想关掉的时候点清除系统代理就行。</p>

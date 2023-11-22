@@ -17,7 +17,7 @@
   localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -151,108 +151,28 @@
 <p>做的挺难受的一道题</p>
 <p>首先看题目给的文件</p>
 <p>“flag.enc”:</p>
-<pre><code>GVd1d3viIXFfcHapEYuo5fAvIiUS83adrtMW/MgPwxVBSl46joFCQ1plcnlDGfL19K/3PvChV6n5QGohzfVyz2Z5GdTlaknxvHDUGf5HCukokyPwK/1EYU7NzrhGE7J5jPdi0Aj7xi/Odxy0hGMgpaBLd/nL3N8O6i9pc4Gg3O8soOlciBG/6/xdfN3SzSStMYIN8nfZZMSq3xDDvz4YB7TcTBh4ik4wYhuC77gmT+HWOv5gLTNQ3EkZs5N3EAopy11zHNYU80yv1jtFGcluNPyXYttU5qU33jcp0Wuznac+t+AZHeSQy5vk8DyWorSGMiS+J4KNqSVlDs12EqXEqqJ0uA==
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">GVd1d3viIXFfcHapEYuo5fAvIiUS83adrtMW/MgPwxVBSl46joFCQ1plcnlDGfL19K/3PvChV6n5QGohzfVyz2Z5GdTlaknxvHDUGf5HCukokyPwK/1EYU7NzrhGE7J5jPdi0Aj7xi/Odxy0hGMgpaBLd/nL3N8O6i9pc4Gg3O8soOlciBG/6/xdfN3SzSStMYIN8nfZZMSq3xDDvz4YB7TcTBh4ik4wYhuC77gmT+HWOv5gLTNQ3EkZs5N3EAopy11zHNYU80yv1jtFGcluNPyXYttU5qU33jcp0Wuznac+t+AZHeSQy5vk8DyWorSGMiS+J4KNqSVlDs12EqXEqqJ0uA==<br></code></pre></td></tr></table></figure>
 <p>“public.key”:</p>
-<pre><code>-----BEGIN PUBLIC KEY-----
-MIIBJDANBgkqhkiG9w0BAQEFAAOCAREAMIIBDAKCAQMlsYv184kJfRcjeGa7Uc/4
-3pIkU3SevEA7CZXJfA44bUbBYcrf93xphg2uR5HCFM+Eh6qqnybpIKl3g0kGA4rv
-tcMIJ9/PP8npdpVE+U4Hzf4IcgOaOmJiEWZ4smH7LWudMlOekqFTs2dWKbqzlC59
-NeMPfu9avxxQ15fQzIjhvcz9GhLqb373XDcn298ueA80KK6Pek+3qJ8YSjZQMrFT
-+EJehFdQ6yt6vALcFc4CB1B6qVCGO7hICngCjdYpeZRNbGM/r6ED5Nsozof1oMbt
-Si8mZEJ/Vlx3gathkUVtlxx/+jlScjdM7AFV5fkRidt0LkwosDoPoRz/sDFz0qTM
-5q5TAgMBAAE=
------END PUBLIC KEY-----
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">-----BEGIN PUBLIC KEY-----<br>MIIBJDANBgkqhkiG9w0BAQEFAAOCAREAMIIBDAKCAQMlsYv184kJfRcjeGa7Uc/4<br>3pIkU3SevEA7CZXJfA44bUbBYcrf93xphg2uR5HCFM+Eh6qqnybpIKl3g0kGA4rv<br>tcMIJ9/PP8npdpVE+U4Hzf4IcgOaOmJiEWZ4smH7LWudMlOekqFTs2dWKbqzlC59<br>NeMPfu9avxxQ15fQzIjhvcz9GhLqb373XDcn298ueA80KK6Pek+3qJ8YSjZQMrFT<br>+EJehFdQ6yt6vALcFc4CB1B6qVCGO7hICngCjdYpeZRNbGM/r6ED5Nsozof1oMbt<br>Si8mZEJ/Vlx3gathkUVtlxx/+jlScjdM7AFV5fkRidt0LkwosDoPoRz/sDFz0qTM<br>5q5TAgMBAAE=<br>-----END PUBLIC KEY-----<br></code></pre></td></tr></table></figure>
 <p>这道题不知道为什么不能用$pow(c,d,n)$的方法来做，所以一直得到乱码</p>
 <p>首先读公钥文件，转换成$n$和$e$</p>
-<pre><code class="language-python">from Crypto.PublicKey import RSA
-f=open('./[AFCTF2018]可怜的RSA/public.key','r').read()
-key=RSA.importKey(f)
-n=key.n
-e=key.e
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA<br>f=<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./[AFCTF2018]可怜的RSA/public.key&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>).read()<br>key=RSA.importKey(f)<br>n=key.n<br>e=key.e<br></code></pre></td></tr></table></figure>
 <p>之后在线网站解密得到$p$和$q$，随后就是求$d$</p>
-<pre><code class="language-python">p=3133337
-q=n//p
-phi=(p-1)*(q-1)
-d=gmpy2.invert(e,phi)
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">p=<span class="hljs-number">3133337</span><br>q=n//p<br>phi=(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>)<br>d=gmpy2.invert(e,phi)<br></code></pre></td></tr></table></figure>
 <p>但是这里我分析密文文件的时候是用base64解密之后再转换成数字</p>
-<pre><code class="language-python">from Crypto.PublicKey import RSA
-from base64 import b64decode
-
-flag=open('./[AFCTF2018]可怜的RSA/flag.enc','r').read()
-c=b64decode(flag)
-c=bytes_to_long(c)
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA<br><span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64decode<br><br>flag=<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./[AFCTF2018]可怜的RSA/flag.enc&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>).read()<br>c=b64decode(flag)<br>c=bytes_to_long(c)<br></code></pre></td></tr></table></figure>
 <p>随后进行计算</p>
-<pre><code class="language-python">m=pow(c,d,n)
-print(long_to_bytes(m))
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">m=<span class="hljs-built_in">pow</span>(c,d,n)<br><span class="hljs-built_in">print</span>(long_to_bytes(m))<br></code></pre></td></tr></table></figure>
 <p>得到一串乱码</p>
-<pre><code>b'\xb2u~\xc4\xd0\xbeV\x1c\x80\x0b\x16F\xee[\xe9\xf4\xbfJ\xd2\x17p\xc2c\xfcvb\x14\xe4\x8c`A\xd4\'Iy=\x11\xeah:\xb9n\x0b\x01\xd2\x03V\xaa\xb2C&#123;\xc3yP\x8aw\xd3\\\xe5\x89\x8e\x8b\xf7\x96\xab[&quot;\xfb\xb7(\xfd(\x8b\xa8L,\xf84,l\xf6\xba\x0cr--\xaf\xfc\xbb\xcf6\xdfh\xa4\xae\xb5\x9dh&#123;\x89\x0f]/;\xfa\xcf\xadF\x9d\xdc\x15L!\xbb\xac\xaf^e\x1e\xb4\x9d.\xca8\x02\xf2\x8b5\x82\xc5\xf6\xe6\xd9\x1ci\xc3r\x9a\x7f\x90k\xda\x15/\xaaM_\xa1\x18wY\x98\xa7\xbb\xe4vO\xa57H\xf6y@?k\xc2\xdd)\xf7\x0bvx&amp;\xd4H\xb1\xcf\x88\xf8\x90J\xa0f\x01]\x18\xf4\xf0YG-\x08\x08Jc\xeb\x16\x1bh\xbe\xc3\xa9\x92\xa9D\xcc(\x1bt\x9e\x9a[g\x1eJ\xc5\xfc\xe7\x99\xcb\xaa\xf61D\x8d$\xf1\xce\'0\xc5cuD\x88\xd8\xeb\xe9\xdd\xac\x9cN\xc5-\xaf\x1d\xde\x92\xeb\xe3)g\xe8\r;\xbc\xab\xe6'
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">b&#x27;\xb2u~\xc4\xd0\xbeV\x1c\x80\x0b\x16F\xee[\xe9\xf4\xbfJ\xd2\x17p\xc2c\xfcvb\x14\xe4\x8c`A\xd4\&#x27;Iy=\x11\xeah:\xb9n\x0b\x01\xd2\x03V\xaa\xb2C&#123;\xc3yP\x8aw\xd3\\\xe5\x89\x8e\x8b\xf7\x96\xab[&quot;\xfb\xb7(\xfd(\x8b\xa8L,\xf84,l\xf6\xba\x0cr--\xaf\xfc\xbb\xcf6\xdfh\xa4\xae\xb5\x9dh&#123;\x89\x0f]/;\xfa\xcf\xadF\x9d\xdc\x15L!\xbb\xac\xaf^e\x1e\xb4\x9d.\xca8\x02\xf2\x8b5\x82\xc5\xf6\xe6\xd9\x1ci\xc3r\x9a\x7f\x90k\xda\x15/\xaaM_\xa1\x18wY\x98\xa7\xbb\xe4vO\xa57H\xf6y@?k\xc2\xdd)\xf7\x0bvx&amp;\xd4H\xb1\xcf\x88\xf8\x90J\xa0f\x01]\x18\xf4\xf0YG-\x08\x08Jc\xeb\x16\x1bh\xbe\xc3\xa9\x92\xa9D\xcc(\x1bt\x9e\x9a[g\x1eJ\xc5\xfc\xe7\x99\xcb\xaa\xf61D\x8d$\xf1\xce\&#x27;0\xc5cuD\x88\xd8\xeb\xe9\xdd\xac\x9cN\xc5-\xaf\x1d\xde\x92\xeb\xe3)g\xe8\r;\xbc\xab\xe6&#x27;<br></code></pre></td></tr></table></figure>
 <p>之后到网上搜题解，无一例外的都用了</p>
-<pre><code class="language-python">key = RSA.construct((n, e, d, p, q))
-key = RSA.importKey(key.exportKey())
-key = PKCS1_OAEP.new(key)
-m = key.decrypt(c)
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">key = RSA.construct((n, e, d, p, q))<br>key = RSA.importKey(key.exportKey())<br>key = PKCS1_OAEP.new(key)<br>m = key.decrypt(c)<br></code></pre></td></tr></table></figure>
 <p>我也不知道为什么用一般的写不出来，希望有大佬可以指点一下，这里就先死记了。</p>
 <p>最后上代码</p>
-<pre><code class="language-python">from Crypto.Util.number import *
-from Crypto.PublicKey import RSA
-from base64 import b64decode
-import gmpy2
-
-flag=open('./[AFCTF2018]可怜的RSA/flag.enc','r').read()
-c=b64decode(flag)
-
-f=open('./[AFCTF2018]可怜的RSA/public.key','r').read()
-k=RSA.importKey(f)
-n=k.n
-e=k.e
-p=3133337
-q=n//p
-phi=(p-1)*(q-1)
-d=gmpy2.invert(e,phi)
-
-from Crypto.Cipher import PKCS1_OAEP
-key = RSA.construct((n, e, int(d), p, q))
-key = RSA.importKey(key.exportKey())
-key = PKCS1_OAEP.new(key)
-m = key.decrypt(c)
-print(m)
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA<br><span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64decode<br><span class="hljs-keyword">import</span> gmpy2<br><br>flag=<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./[AFCTF2018]可怜的RSA/flag.enc&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>).read()<br>c=b64decode(flag)<br><br>f=<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./[AFCTF2018]可怜的RSA/public.key&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>).read()<br>k=RSA.importKey(f)<br>n=k.n<br>e=k.e<br>p=<span class="hljs-number">3133337</span><br>q=n//p<br>phi=(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>)<br>d=gmpy2.invert(e,phi)<br><br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> PKCS1_OAEP<br>key = RSA.construct((n, e, <span class="hljs-built_in">int</span>(d), p, q))<br>key = RSA.importKey(key.exportKey())<br>key = PKCS1_OAEP.new(key)<br>m = key.decrypt(c)<br><span class="hljs-built_in">print</span>(m)<br></code></pre></td></tr></table></figure>
 <h2 id="RoarCTF2019-babyRSA">[RoarCTF2019]babyRSA</h2>
 <p>先看题</p>
-<pre><code class="language-python">import sympy
-import random
-
-def myGetPrime():
-    A= getPrime(513)
-    print(A)
-    B=A-random.randint(1e3,1e5)
-    print(B)
-    return sympy.nextPrime((B!)%A)
-p=myGetPrime()
-#A1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467234407
-#B1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467140596
-
-q=myGetPrime()
-#A2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858418927
-#B2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858351026
-
-r=myGetPrime()
-
-n=p*q*r
-#n=85492663786275292159831603391083876175149354309327673008716627650718160585639723100793347534649628330416631255660901307533909900431413447524262332232659153047067908693481947121069070451562822417357656432171870951184673132554213690123308042697361969986360375060954702920656364144154145812838558365334172935931441424096270206140691814662318562696925767991937369782627908408239087358033165410020690152067715711112732252038588432896758405898709010342467882264362733
-c=pow(flag,e,n)
-#e=0x1001
-#c=75700883021669577739329316795450706204502635802310731477156998834710820770245219468703245302009998932067080383977560299708060476222089630209972629755965140317526034680452483360917378812244365884527186056341888615564335560765053550155758362271622330017433403027261127561225585912484777829588501213961110690451987625502701331485141639684356427316905122995759825241133872734362716041819819948645662803292418802204430874521342108413623635150475963121220095236776428
-#so,what is the flag?
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sympy<br><span class="hljs-keyword">import</span> random<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">myGetPrime</span>():<br>    A= getPrime(<span class="hljs-number">513</span>)<br>    <span class="hljs-built_in">print</span>(A)<br>    B=A-random.randint(<span class="hljs-number">1e3</span>,<span class="hljs-number">1e5</span>)<br>    <span class="hljs-built_in">print</span>(B)<br>    <span class="hljs-keyword">return</span> sympy.nextPrime((B!)%A)<br>p=myGetPrime()<br><span class="hljs-comment">#A1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467234407</span><br><span class="hljs-comment">#B1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467140596</span><br><br>q=myGetPrime()<br><span class="hljs-comment">#A2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858418927</span><br><span class="hljs-comment">#B2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858351026</span><br><br>r=myGetPrime()<br><br>n=p*q*r<br><span class="hljs-comment">#n=85492663786275292159831603391083876175149354309327673008716627650718160585639723100793347534649628330416631255660901307533909900431413447524262332232659153047067908693481947121069070451562822417357656432171870951184673132554213690123308042697361969986360375060954702920656364144154145812838558365334172935931441424096270206140691814662318562696925767991937369782627908408239087358033165410020690152067715711112732252038588432896758405898709010342467882264362733</span><br>c=<span class="hljs-built_in">pow</span>(flag,e,n)<br><span class="hljs-comment">#e=0x1001</span><br><span class="hljs-comment">#c=75700883021669577739329316795450706204502635802310731477156998834710820770245219468703245302009998932067080383977560299708060476222089630209972629755965140317526034680452483360917378812244365884527186056341888615564335560765053550155758362271622330017433403027261127561225585912484777829588501213961110690451987625502701331485141639684356427316905122995759825241133872734362716041819819948645662803292418802204430874521342108413623635150475963121220095236776428</span><br><span class="hljs-comment">#so,what is the flag?</span><br></code></pre></td></tr></table></figure>
 <p>这道题的$n,e,c$都已经给出，重点就是求$p,q$的值。那么就观察$myGetPrime$这个函数，发现它只需要求出$B!$就好了，而且$A$和$B$都已经给出。但是$B$的阶乘非常大，可能要费很长时间，跑了十分钟没跑出来，之后就搜题解，发现是用威尔逊定理写的，这个之前在信安数学基础学了但是现在都忘光了，看来得好好复习这些基础知识，那么话不多说，直接来看正确思路。</p>
 <p>先来看看威尔逊定理说了什么：</p>
 <p>如果$p$为素数，那么<br>
@@ -264,130 +184,15 @@ $$<br>
 <p>那么此时的公式就可以转变成$B!*k\equiv-1\mod{A}$</p>
 <p>找到$k$的逆元，就可以求出$B!\equiv-k^{-1}\mod{A}$</p>
 <p>这样就可以省很多计算，上代码</p>
-<pre><code class="language-python">import sympy
-import random
-import gmpy2
-from Crypto.Util.number import *
-def myGetPrime(A,B):
-    k=1
-    for i in range(B+1,A):
-        k=k*i%A
-    x=gmpy2.invert(k,A)
-    xB=-x%A
-    return sympy.nextprime(xB)
-
-A1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467234407
-B1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467140596
-p=myGetPrime(A1,B1)
-
-A2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858418927
-B2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858351026
-q=myGetPrime(A2,B2)
-
-n=85492663786275292159831603391083876175149354309327673008716627650718160585639723100793347534649628330416631255660901307533909900431413447524262332232659153047067908693481947121069070451562822417357656432171870951184673132554213690123308042697361969986360375060954702920656364144154145812838558365334172935931441424096270206140691814662318562696925767991937369782627908408239087358033165410020690152067715711112732252038588432896758405898709010342467882264362733
-
-r=(n//p)//q
-phi=(p-1)*(q-1)*(r-1)
-e=0x1001
-d=gmpy2.invert(e,phi)
-c=75700883021669577739329316795450706204502635802310731477156998834710820770245219468703245302009998932067080383977560299708060476222089630209972629755965140317526034680452483360917378812244365884527186056341888615564335560765053550155758362271622330017433403027261127561225585912484777829588501213961110690451987625502701331485141639684356427316905122995759825241133872734362716041819819948645662803292418802204430874521342108413623635150475963121220095236776428
-
-m=pow(c,d,n)
-flag=long_to_bytes(m)
-print(flag)
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sympy<br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> gmpy2<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">myGetPrime</span>(<span class="hljs-params">A,B</span>):<br>    k=<span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(B+<span class="hljs-number">1</span>,A):<br>        k=k*i%A<br>    x=gmpy2.invert(k,A)<br>    xB=-x%A<br>    <span class="hljs-keyword">return</span> sympy.nextprime(xB)<br><br>A1=<span class="hljs-number">21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467234407</span><br>B1=<span class="hljs-number">21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467140596</span><br>p=myGetPrime(A1,B1)<br><br>A2=<span class="hljs-number">16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858418927</span><br>B2=<span class="hljs-number">16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858351026</span><br>q=myGetPrime(A2,B2)<br><br>n=<span class="hljs-number">85492663786275292159831603391083876175149354309327673008716627650718160585639723100793347534649628330416631255660901307533909900431413447524262332232659153047067908693481947121069070451562822417357656432171870951184673132554213690123308042697361969986360375060954702920656364144154145812838558365334172935931441424096270206140691814662318562696925767991937369782627908408239087358033165410020690152067715711112732252038588432896758405898709010342467882264362733</span><br><br>r=(n//p)//q<br>phi=(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>)*(r-<span class="hljs-number">1</span>)<br>e=<span class="hljs-number">0x1001</span><br>d=gmpy2.invert(e,phi)<br>c=<span class="hljs-number">75700883021669577739329316795450706204502635802310731477156998834710820770245219468703245302009998932067080383977560299708060476222089630209972629755965140317526034680452483360917378812244365884527186056341888615564335560765053550155758362271622330017433403027261127561225585912484777829588501213961110690451987625502701331485141639684356427316905122995759825241133872734362716041819819948645662803292418802204430874521342108413623635150475963121220095236776428</span><br><br>m=<span class="hljs-built_in">pow</span>(c,d,n)<br>flag=long_to_bytes(m)<br><span class="hljs-built_in">print</span>(flag)<br></code></pre></td></tr></table></figure>
 <h2 id="RSA-what">RSA &amp; what</h2>
 <p>这道题也不算难，但是最后有个base64隐写之前没见过，吸取线下赛经验，把它记到博客上。</p>
 <p>首先题目给出了四个文件</p>
 <p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/RSA&amp;What_1.png" alt="RSA&amp;What_1"></p>
 <p>看给出的代码</p>
-<pre><code class="language-python">from Crypto.Util.number import *
-from random import randint
-from gmpy2 import powmod
-
-p = getPrime(2048)
-q = getPrime(2048)
-N = p*q
-Phi = (p-1)*(q-1)
-def get_enc_key(N,Phi):
-    e = getPrime(N)
-    if Phi % e == 0:
-        return get_enc_key(N, Phi)
-    else:
-        return e
-e1 = get_enc_key(randint(10, 12), Phi)
-e2 = get_enc_key(randint(10, 12), Phi)
-
-fr = open(r&quot;./base64&quot;, &quot;rb&quot;)#flag is in this file
-f1 = open(r&quot;./HUB1&quot;, &quot;wb&quot;)
-f2 = open(r&quot;./HUB2&quot;, &quot;wb&quot;)
-base64 = fr.read(255)
-f1.write(&quot;%d\n%d\n&quot; % (N, e1))
-f2.write(&quot;%d\n%d\n&quot; % (N, e2))
-while len(base64)&gt;0:
-    pt = bytes_to_long(base64)
-    ct1 = powmod(pt, e1, N)
-    ct2 = powmod(pt, e2, N)
-    f1.write(&quot;\n%d&quot; % ct1)
-    f2.write(&quot;\n%d&quot; % ct2)
-    base64 = fr.read(255)
-fr.close()
-f1.close()
-f2.close()
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randint<br><span class="hljs-keyword">from</span> gmpy2 <span class="hljs-keyword">import</span> powmod<br><br>p = getPrime(<span class="hljs-number">2048</span>)<br>q = getPrime(<span class="hljs-number">2048</span>)<br>N = p*q<br>Phi = (p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_enc_key</span>(<span class="hljs-params">N,Phi</span>):<br>    e = getPrime(N)<br>    <span class="hljs-keyword">if</span> Phi % e == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> get_enc_key(N, Phi)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> e<br>e1 = get_enc_key(randint(<span class="hljs-number">10</span>, <span class="hljs-number">12</span>), Phi)<br>e2 = get_enc_key(randint(<span class="hljs-number">10</span>, <span class="hljs-number">12</span>), Phi)<br><br>fr = <span class="hljs-built_in">open</span>(<span class="hljs-string">r&quot;./base64&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>)<span class="hljs-comment">#flag is in this file</span><br>f1 = <span class="hljs-built_in">open</span>(<span class="hljs-string">r&quot;./HUB1&quot;</span>, <span class="hljs-string">&quot;wb&quot;</span>)<br>f2 = <span class="hljs-built_in">open</span>(<span class="hljs-string">r&quot;./HUB2&quot;</span>, <span class="hljs-string">&quot;wb&quot;</span>)<br>base64 = fr.read(<span class="hljs-number">255</span>)<br>f1.write(<span class="hljs-string">&quot;%d\n%d\n&quot;</span> % (N, e1))<br>f2.write(<span class="hljs-string">&quot;%d\n%d\n&quot;</span> % (N, e2))<br><span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(base64)&gt;<span class="hljs-number">0</span>:<br>    pt = bytes_to_long(base64)<br>    ct1 = powmod(pt, e1, N)<br>    ct2 = powmod(pt, e2, N)<br>    f1.write(<span class="hljs-string">&quot;\n%d&quot;</span> % ct1)<br>    f2.write(<span class="hljs-string">&quot;\n%d&quot;</span> % ct2)<br>    base64 = fr.read(<span class="hljs-number">255</span>)<br>fr.close()<br>f1.close()<br>f2.close()<br></code></pre></td></tr></table></figure>
 <p>很明显这里用了相同的模数N和两个公钥，加密得出了多个密文，都存放在HUB1和HUB2中，考虑共模攻击：</p>
-<pre><code class="language-python">from Crypto.Util.number import *
-from random import randint
-from gmpy2 import powmod
-import base64
-import primefac
-def same_n_attack(n,e1,e2,c1,c2):
-    def egcd(a,b):
-         x, lastX = 0, 1
-         y, lastY = 1, 0
-         while (b != 0):
-             q = a // b
-             a, b = b, a % b
-             x, lastX = lastX - q * x, x
-             y, lastY = lastY - q * y, y
-         return (lastX, lastY)
-    s = egcd(e1,e2)
-    s1 = s[0]
-    s2 = s[1]
-    if s1 &lt; 0:
-        s1 = -s1
-        c1 = primefac.modinv(c1, n)
-        if c1 &lt; 0:
-            c1 += n
-    elif s2 &lt; 0:
-        s2 = -s2
-        c2 = primefac.modinv(c2, n)
-        if c2 &lt; 0:
-            c2 += n
-    m = (pow(c1, s1, n) * pow(c2, s2, n)) % n
-    return m
-
-import gmpy2
-f1 = open(r&quot;./HUB1&quot;, &quot;r&quot;).readlines()
-f2 = open(r&quot;./HUB2&quot;, &quot;r&quot;).readlines()
-n=int(f1[0])
-e1=int(f1[1])
-e2=int(f2[1])
-print(e1,e2)
-c=''
-gcd, s, t = gmpy2.gcdext(e1, e2)
-flag=''
-for i in range(3,len(f2)):
-    message1 = int(f1[i])
-    message2 = int(f2[i])
-    plain = same_n_attack(n,e1,e2,message1,message2)
-    c=long_to_bytes(plain)
-    flag+=str(c)
-print()
-flag = flag[2:-2].split('\\n')
-for i in flag:
-    print(base64.b64decode(i).decode('utf-8'),end=' ')
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randint<br><span class="hljs-keyword">from</span> gmpy2 <span class="hljs-keyword">import</span> powmod<br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">import</span> primefac<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">same_n_attack</span>(<span class="hljs-params">n,e1,e2,c1,c2</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">egcd</span>(<span class="hljs-params">a,b</span>):<br>         x, lastX = <span class="hljs-number">0</span>, <span class="hljs-number">1</span><br>         y, lastY = <span class="hljs-number">1</span>, <span class="hljs-number">0</span><br>         <span class="hljs-keyword">while</span> (b != <span class="hljs-number">0</span>):<br>             q = a // b<br>             a, b = b, a % b<br>             x, lastX = lastX - q * x, x<br>             y, lastY = lastY - q * y, y<br>         <span class="hljs-keyword">return</span> (lastX, lastY)<br>    s = egcd(e1,e2)<br>    s1 = s[<span class="hljs-number">0</span>]<br>    s2 = s[<span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">if</span> s1 &lt; <span class="hljs-number">0</span>:<br>        s1 = -s1<br>        c1 = primefac.modinv(c1, n)<br>        <span class="hljs-keyword">if</span> c1 &lt; <span class="hljs-number">0</span>:<br>            c1 += n<br>    <span class="hljs-keyword">elif</span> s2 &lt; <span class="hljs-number">0</span>:<br>        s2 = -s2<br>        c2 = primefac.modinv(c2, n)<br>        <span class="hljs-keyword">if</span> c2 &lt; <span class="hljs-number">0</span>:<br>            c2 += n<br>    m = (<span class="hljs-built_in">pow</span>(c1, s1, n) * <span class="hljs-built_in">pow</span>(c2, s2, n)) % n<br>    <span class="hljs-keyword">return</span> m<br><br><span class="hljs-keyword">import</span> gmpy2<br>f1 = <span class="hljs-built_in">open</span>(<span class="hljs-string">r&quot;./HUB1&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>).readlines()<br>f2 = <span class="hljs-built_in">open</span>(<span class="hljs-string">r&quot;./HUB2&quot;</span>, <span class="hljs-string">&quot;r&quot;</span>).readlines()<br>n=<span class="hljs-built_in">int</span>(f1[<span class="hljs-number">0</span>])<br>e1=<span class="hljs-built_in">int</span>(f1[<span class="hljs-number">1</span>])<br>e2=<span class="hljs-built_in">int</span>(f2[<span class="hljs-number">1</span>])<br><span class="hljs-built_in">print</span>(e1,e2)<br>c=<span class="hljs-string">&#x27;&#x27;</span><br>gcd, s, t = gmpy2.gcdext(e1, e2)<br>flag=<span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>,<span class="hljs-built_in">len</span>(f2)):<br>    message1 = <span class="hljs-built_in">int</span>(f1[i])<br>    message2 = <span class="hljs-built_in">int</span>(f2[i])<br>    plain = same_n_attack(n,e1,e2,message1,message2)<br>    c=long_to_bytes(plain)<br>    flag+=<span class="hljs-built_in">str</span>(c)<br><span class="hljs-built_in">print</span>()<br>flag = flag[<span class="hljs-number">2</span>:-<span class="hljs-number">2</span>].split(<span class="hljs-string">&#x27;\\n&#x27;</span>)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> flag:<br>    <span class="hljs-built_in">print</span>(base64.b64decode(i).decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>),end=<span class="hljs-string">&#x27; &#x27;</span>)<br></code></pre></td></tr></table></figure>
 <p>得到一串字符串</p>
 <p><img src="/2023/05/14/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%951/RSA&amp;What_2.png" alt="2"></p>
 <p>同时会报错</p>
