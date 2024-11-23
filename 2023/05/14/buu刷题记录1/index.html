@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>buu刷题记录1 | Welcom</title><meta name="author" content="yz的博客"><meta name="copyright" content="yz的博客"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="刷题记录 [AFCTF2018]可怜的RSA 做的挺难受的一道题 首先看题目给的文件 “flag.enc”: GVd1d3viIXFfcHapEYuo5fAvIiUS83adrtMW&#x2F;MgPwxVBSl46joFCQ1plcnlDGfL19K&#x2F;3PvChV6n5QGohzfVyz2Z5GdTlaknxvHDUGf5HCukokyPwK&#x2F;1EYU7NzrhGE7J5jPdi0Aj7xi&#x2F;Odxy0h">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>buu刷题记录1 | Welcom</title><meta name="author" content="yz的博客"><meta name="copyright" content="yz的博客"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="刷题记录[AFCTF2018]可怜的RSA做的挺难受的一道题 首先看题目给的文件 “flag.enc”: GVd1d3viIXFfcHapEYuo5fAvIiUS83adrtMW&#x2F;MgPwxVBSl46joFCQ1plcnlDGfL19K&#x2F;3PvChV6n5QGohzfVyz2Z5GdTlaknxvHDUGf5HCukokyPwK&#x2F;1EYU7NzrhGE7J5jPdi0Aj7xi&#x2F;Odxy0hGM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="buu刷题记录1">
 <meta property="og:url" content="http://yzsandw.com/2023/05/14/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%951/index.html">
 <meta property="og:site_name" content="Welcom">
-<meta property="og:description" content="刷题记录 [AFCTF2018]可怜的RSA 做的挺难受的一道题 首先看题目给的文件 “flag.enc”: GVd1d3viIXFfcHapEYuo5fAvIiUS83adrtMW&#x2F;MgPwxVBSl46joFCQ1plcnlDGfL19K&#x2F;3PvChV6n5QGohzfVyz2Z5GdTlaknxvHDUGf5HCukokyPwK&#x2F;1EYU7NzrhGE7J5jPdi0Aj7xi&#x2F;Odxy0h">
+<meta property="og:description" content="刷题记录[AFCTF2018]可怜的RSA做的挺难受的一道题 首先看题目给的文件 “flag.enc”: GVd1d3viIXFfcHapEYuo5fAvIiUS83adrtMW&#x2F;MgPwxVBSl46joFCQ1plcnlDGfL19K&#x2F;3PvChV6n5QGohzfVyz2Z5GdTlaknxvHDUGf5HCukokyPwK&#x2F;1EYU7NzrhGE7J5jPdi0Aj7xi&#x2F;Odxy0hGM">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95.png">
 <meta property="article:published_time" content="2023-05-14T03:53:18.000Z">
@@ -11,16 +11,105 @@
 <meta property="article:author" content="yz的博客">
 <meta property="article:tag" content="刷题记录">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95.png"><link rel="shortcut icon" href="https://i.postimg.cc/SsrHG3pr/preview.jpg"><link rel="canonical" href="http://yzsandw.com/2023/05/14/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%951/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+<meta name="twitter:image" content="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95.png"><link rel="shortcut icon" href="https://i.postimg.cc/SsrHG3pr/preview.jpg"><link rel="canonical" href="http://yzsandw.com/2023/05/14/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%951/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  localSearch: undefined,
   translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
   copy: {
     success: '复制成功',
-    error: '复制错误',
+    error: '复制失败',
     noSupport: '浏览器不支持'
   },
   relativeDate: {
@@ -28,7 +117,7 @@
     post: false
   },
   runtime: '',
-  date_suffix: {
+  dateSuffix: {
     just: '刚刚',
     min: '分钟前',
     hour: '小时前',
@@ -36,13 +125,11 @@
     month: '个月前'
   },
   copyright: undefined,
-  lightbox: 'fancybox',
+  lightbox: 'null',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
   },
   isPhotoFigcaption: false,
   islazyload: false,
@@ -50,256 +137,239 @@
   percent: {
     toc: true,
     rightside: false,
-  }
+  },
+  autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'buu刷题记录1',
   isPost: true,
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2023-11-24 14:44:49'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><link rel="stylesheet" href="/css/corner-indicator.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.postimg.cc/SsrHG3pr/preview.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/buu刷题记录.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Welcom"><span class="site-name">Welcom</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">buu刷题记录1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-14T03:53:18.000Z" title="发表于 2023-05-14 11:53:18">2023-05-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-11-24T06:44:49.602Z" title="更新于 2023-11-24 14:44:49">2023-11-24</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="buu刷题记录1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>刷题记录</h1>
-<h2 id="afctf2018-可怜的rsa">[AFCTF2018]可怜的RSA</h2>
-<p>做的挺难受的一道题</p>
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://i.postimg.cc/SsrHG3pr/preview.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/buu刷题记录.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Welcom</span></a><a class="nav-page-title" href="/"><span class="site-name">buu刷题记录1</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">buu刷题记录1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-14T03:53:18.000Z" title="发表于 2023-05-14 11:53:18">2023-05-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-11-24T06:44:49.602Z" title="更新于 2023-11-24 14:44:49">2023-11-24</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="刷题记录"><a href="#刷题记录" class="headerlink" title="刷题记录"></a>刷题记录</h1><h2 id="AFCTF2018-可怜的RSA"><a href="#AFCTF2018-可怜的RSA" class="headerlink" title="[AFCTF2018]可怜的RSA"></a>[AFCTF2018]可怜的RSA</h2><p>做的挺难受的一道题</p>
 <p>首先看题目给的文件</p>
 <p>“flag.enc”:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GVd1d3viIXFfcHapEYuo5fAvIiUS83adrtMW/MgPwxVBSl46joFCQ1plcnlDGfL19K/3PvChV6n5QGohzfVyz2Z5GdTlaknxvHDUGf5HCukokyPwK/1EYU7NzrhGE7J5jPdi0Aj7xi/Odxy0hGMgpaBLd/nL3N8O6i9pc4Gg3O8soOlciBG/6/xdfN3SzSStMYIN8nfZZMSq3xDDvz4YB7TcTBh4ik4wYhuC77gmT+HWOv5gLTNQ3EkZs5N3EAopy11zHNYU80yv1jtFGcluNPyXYttU5qU33jcp0Wuznac+t+AZHeSQy5vk8DyWorSGMiS+J4KNqSVlDs12EqXEqqJ0uA==</span><br></pre></td></tr></table></figure>
+
 <p>“public.key”:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-----BEGIN PUBLIC KEY-----</span><br><span class="line">MIIBJDANBgkqhkiG9w0BAQEFAAOCAREAMIIBDAKCAQMlsYv184kJfRcjeGa7Uc/4</span><br><span class="line">3pIkU3SevEA7CZXJfA44bUbBYcrf93xphg2uR5HCFM+Eh6qqnybpIKl3g0kGA4rv</span><br><span class="line">tcMIJ9/PP8npdpVE+U4Hzf4IcgOaOmJiEWZ4smH7LWudMlOekqFTs2dWKbqzlC59</span><br><span class="line">NeMPfu9avxxQ15fQzIjhvcz9GhLqb373XDcn298ueA80KK6Pek+3qJ8YSjZQMrFT</span><br><span class="line">+EJehFdQ6yt6vALcFc4CB1B6qVCGO7hICngCjdYpeZRNbGM/r6ED5Nsozof1oMbt</span><br><span class="line">Si8mZEJ/Vlx3gathkUVtlxx/+jlScjdM7AFV5fkRidt0LkwosDoPoRz/sDFz0qTM</span><br><span class="line">5q5TAgMBAAE=</span><br><span class="line">-----END PUBLIC KEY-----</span><br></pre></td></tr></table></figure>
-<p>这道题不知道为什么不能用<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>o</mi><mi>w</mi><mo stretchy="false">(</mo><mi>c</mi><mo separator="true">,</mo><mi>d</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">pow(c,d,n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mopen">(</span><span class="mord mathnormal">c</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>的方法来做，所以一直得到乱码</p>
-<p>首先读公钥文件，转换成<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi></mrow><annotation encoding="application/x-tex">e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">e</span></span></span></span></p>
+
+<p>这道题不知道为什么不能用$pow(c,d,n)$的方法来做，所以一直得到乱码</p>
+<p>首先读公钥文件，转换成$n$和$e$</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line">f=<span class="built_in">open</span>(<span class="string">&#x27;./[AFCTF2018]可怜的RSA/public.key&#x27;</span>,<span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line">key=RSA.importKey(f)</span><br><span class="line">n=key.n</span><br><span class="line">e=key.e</span><br></pre></td></tr></table></figure>
-<p>之后在线网站解密得到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span>，随后就是求<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span></p>
+
+<p>之后在线网站解密得到$p$和$q$，随后就是求$d$</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">p=<span class="number">3133337</span></span><br><span class="line">q=n//p</span><br><span class="line">phi=(p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">d=gmpy2.invert(e,phi)</span><br></pre></td></tr></table></figure>
+
 <p>但是这里我分析密文文件的时候是用base64解密之后再转换成数字</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode</span><br><span class="line"></span><br><span class="line">flag=<span class="built_in">open</span>(<span class="string">&#x27;./[AFCTF2018]可怜的RSA/flag.enc&#x27;</span>,<span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line">c=b64decode(flag)</span><br><span class="line">c=bytes_to_long(c)</span><br></pre></td></tr></table></figure>
+
 <p>随后进行计算</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">m=<span class="built_in">pow</span>(c,d,n)</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(m))</span><br></pre></td></tr></table></figure>
+
 <p>得到一串乱码</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">b&#x27;\xb2u~\xc4\xd0\xbeV\x1c\x80\x0b\x16F\xee[\xe9\xf4\xbfJ\xd2\x17p\xc2c\xfcvb\x14\xe4\x8c`A\xd4\&#x27;Iy=\x11\xeah:\xb9n\x0b\x01\xd2\x03V\xaa\xb2C&#123;\xc3yP\x8aw\xd3\\\xe5\x89\x8e\x8b\xf7\x96\xab[&quot;\xfb\xb7(\xfd(\x8b\xa8L,\xf84,l\xf6\xba\x0cr--\xaf\xfc\xbb\xcf6\xdfh\xa4\xae\xb5\x9dh&#123;\x89\x0f]/;\xfa\xcf\xadF\x9d\xdc\x15L!\xbb\xac\xaf^e\x1e\xb4\x9d.\xca8\x02\xf2\x8b5\x82\xc5\xf6\xe6\xd9\x1ci\xc3r\x9a\x7f\x90k\xda\x15/\xaaM_\xa1\x18wY\x98\xa7\xbb\xe4vO\xa57H\xf6y@?k\xc2\xdd)\xf7\x0bvx&amp;\xd4H\xb1\xcf\x88\xf8\x90J\xa0f\x01]\x18\xf4\xf0YG-\x08\x08Jc\xeb\x16\x1bh\xbe\xc3\xa9\x92\xa9D\xcc(\x1bt\x9e\x9a[g\x1eJ\xc5\xfc\xe7\x99\xcb\xaa\xf61D\x8d$\xf1\xce\&#x27;0\xc5cuD\x88\xd8\xeb\xe9\xdd\xac\x9cN\xc5-\xaf\x1d\xde\x92\xeb\xe3)g\xe8\r;\xbc\xab\xe6&#x27;</span><br></pre></td></tr></table></figure>
+
 <p>之后到网上搜题解，无一例外的都用了</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">key = RSA.construct((n, e, d, p, q))</span><br><span class="line">key = RSA.importKey(key.exportKey())</span><br><span class="line">key = PKCS1_OAEP.new(key)</span><br><span class="line">m = key.decrypt(c)</span><br></pre></td></tr></table></figure>
+
 <p>我也不知道为什么用一般的写不出来，希望有大佬可以指点一下，这里就先死记了。</p>
 <p>最后上代码</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"></span><br><span class="line">flag=<span class="built_in">open</span>(<span class="string">&#x27;./[AFCTF2018]可怜的RSA/flag.enc&#x27;</span>,<span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line">c=b64decode(flag)</span><br><span class="line"></span><br><span class="line">f=<span class="built_in">open</span>(<span class="string">&#x27;./[AFCTF2018]可怜的RSA/public.key&#x27;</span>,<span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line">k=RSA.importKey(f)</span><br><span class="line">n=k.n</span><br><span class="line">e=k.e</span><br><span class="line">p=<span class="number">3133337</span></span><br><span class="line">q=n//p</span><br><span class="line">phi=(p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">d=gmpy2.invert(e,phi)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> PKCS1_OAEP</span><br><span class="line">key = RSA.construct((n, e, <span class="built_in">int</span>(d), p, q))</span><br><span class="line">key = RSA.importKey(key.exportKey())</span><br><span class="line">key = PKCS1_OAEP.new(key)</span><br><span class="line">m = key.decrypt(c)</span><br><span class="line"><span class="built_in">print</span>(m)</span><br></pre></td></tr></table></figure>
-<h2 id="roarctf2019-babyrsa">[RoarCTF2019]babyRSA</h2>
-<p>先看题</p>
+
+<h2 id="RoarCTF2019-babyRSA"><a href="#RoarCTF2019-babyRSA" class="headerlink" title="[RoarCTF2019]babyRSA"></a>[RoarCTF2019]babyRSA</h2><p>先看题</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sympy</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">myGetPrime</span>():</span><br><span class="line">    A= getPrime(<span class="number">513</span>)</span><br><span class="line">    <span class="built_in">print</span>(A)</span><br><span class="line">    B=A-random.randint(<span class="number">1e3</span>,<span class="number">1e5</span>)</span><br><span class="line">    <span class="built_in">print</span>(B)</span><br><span class="line">    <span class="keyword">return</span> sympy.nextPrime((B!)%A)</span><br><span class="line">p=myGetPrime()</span><br><span class="line"><span class="comment">#A1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467234407</span></span><br><span class="line"><span class="comment">#B1=21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467140596</span></span><br><span class="line"></span><br><span class="line">q=myGetPrime()</span><br><span class="line"><span class="comment">#A2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858418927</span></span><br><span class="line"><span class="comment">#B2=16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858351026</span></span><br><span class="line"></span><br><span class="line">r=myGetPrime()</span><br><span class="line"></span><br><span class="line">n=p*q*r</span><br><span class="line"><span class="comment">#n=85492663786275292159831603391083876175149354309327673008716627650718160585639723100793347534649628330416631255660901307533909900431413447524262332232659153047067908693481947121069070451562822417357656432171870951184673132554213690123308042697361969986360375060954702920656364144154145812838558365334172935931441424096270206140691814662318562696925767991937369782627908408239087358033165410020690152067715711112732252038588432896758405898709010342467882264362733</span></span><br><span class="line">c=<span class="built_in">pow</span>(flag,e,n)</span><br><span class="line"><span class="comment">#e=0x1001</span></span><br><span class="line"><span class="comment">#c=75700883021669577739329316795450706204502635802310731477156998834710820770245219468703245302009998932067080383977560299708060476222089630209972629755965140317526034680452483360917378812244365884527186056341888615564335560765053550155758362271622330017433403027261127561225585912484777829588501213961110690451987625502701331485141639684356427316905122995759825241133872734362716041819819948645662803292418802204430874521342108413623635150475963121220095236776428</span></span><br><span class="line"><span class="comment">#so,what is the flag?</span></span><br></pre></td></tr></table></figure>
-<p>这道题的<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo separator="true">,</mo><mi>e</mi><mo separator="true">,</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">n,e,c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">c</span></span></span></span>都已经给出，重点就是求<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo separator="true">,</mo><mi>q</mi></mrow><annotation encoding="application/x-tex">p,q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span>的值。那么就观察<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>y</mi><mi>G</mi><mi>e</mi><mi>t</mi><mi>P</mi><mi>r</mi><mi>i</mi><mi>m</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">myGetPrime</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">G</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.13889em;">tP</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">im</span><span class="mord mathnormal">e</span></span></span></span>这个函数，发现它只需要求出<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo stretchy="false">!</mo></mrow><annotation encoding="application/x-tex">B!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">!</span></span></span></span>就好了，而且<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span>都已经给出。但是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span>的阶乘非常大，可能要费很长时间，跑了十分钟没跑出来，之后就搜题解，发现是用威尔逊定理写的，这个之前在信安数学基础学了但是现在都忘光了，看来得好好复习这些基础知识，那么话不多说，直接来看正确思路。</p>
+
+<p>这道题的$n,e,c$都已经给出，重点就是求$p,q$的值。那么就观察$myGetPrime$这个函数，发现它只需要求出$B!$就好了，而且$A$和$B$都已经给出。但是$B$的阶乘非常大，可能要费很长时间，跑了十分钟没跑出来，之后就搜题解，发现是用威尔逊定理写的，这个之前在信安数学基础学了但是现在都忘光了，看来得好好复习这些基础知识，那么话不多说，直接来看正确思路。</p>
 <p>先来看看威尔逊定理说了什么：</p>
-<p>如果<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>为素数，那么</p>
-<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">!</mo><mo>≡</mo><mo>−</mo><mn>1</mn><mspace></mspace><mspace width="1em"><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>p</mi></mspace></mrow><annotation encoding="application/x-tex">(p-1)!\equiv-1\mod{p}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)!</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:1em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">p</span></span></span></span></span></p>
-<p>由这个威尔逊定理可以对这个题目进行转换：</p>
-<p>首先<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>A</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">!</mo><mo>≡</mo><mo>−</mo><mn>1</mn><mspace></mspace><mspace width="0.6667em"><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>A</mi></mspace></mrow><annotation encoding="application/x-tex">(A-1)!\equiv-1\mod{A}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)!</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6667em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">A</span></span></span></span>，此时令<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mfrac><mrow><mo stretchy="false">(</mo><mi>A</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">!</mo></mrow><mrow><mi>B</mi><mo stretchy="false">!</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">k=\frac{(A-1)!}{B!}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.355em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span><span class="mclose mtight">!</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">A</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)!</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>，这个<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>要比<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo stretchy="false">!</mo></mrow><annotation encoding="application/x-tex">B!</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">!</span></span></span></span>好计算的多，它相当于<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span>之后，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span>之前的所有数相乘</p>
-<p>那么此时的公式就可以转变成<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo stretchy="false">!</mo><mo>∗</mo><mi>k</mi><mo>≡</mo><mo>−</mo><mn>1</mn><mspace></mspace><mspace width="0.6667em"><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>A</mi></mspace></mrow><annotation encoding="application/x-tex">B!*k\equiv-1\mod{A}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6667em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">A</span></span></span></span></p>
-<p>找到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>的逆元，就可以求出<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo stretchy="false">!</mo><mo>≡</mo><mo>−</mo><msup><mi>k</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mspace></mspace><mspace width="0.6667em"><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>A</mi></mspace></mrow><annotation encoding="application/x-tex">B!\equiv-k^{-1}\mod{A}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6667em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">A</span></span></span></span></p>
+<p>如果$p$为素数，那么<br>$$<br>(p-1)!\equiv-1\mod{p}<br>$$<br>由这个威尔逊定理可以对这个题目进行转换：</p>
+<p>首先$(A-1)!\equiv-1\mod{A}$，此时令$k&#x3D;\frac{(A-1)!}{B!}$，这个$k$要比$B!$好计算的多，它相当于$B$之后，$A$之前的所有数相乘</p>
+<p>那么此时的公式就可以转变成$B!*k\equiv-1\mod{A}$</p>
+<p>找到$k$的逆元，就可以求出$B!\equiv-k^{-1}\mod{A}$</p>
 <p>这样就可以省很多计算，上代码</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sympy</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">myGetPrime</span>(<span class="params">A,B</span>):</span><br><span class="line">    k=<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(B+<span class="number">1</span>,A):</span><br><span class="line">        k=k*i%A</span><br><span class="line">    x=gmpy2.invert(k,A)</span><br><span class="line">    xB=-x%A</span><br><span class="line">    <span class="keyword">return</span> sympy.nextprime(xB)</span><br><span class="line"></span><br><span class="line">A1=<span class="number">21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467234407</span></span><br><span class="line">B1=<span class="number">21856963452461630437348278434191434000066076750419027493852463513469865262064340836613831066602300959772632397773487317560339056658299954464169264467140596</span></span><br><span class="line">p=myGetPrime(A1,B1)</span><br><span class="line"></span><br><span class="line">A2=<span class="number">16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858418927</span></span><br><span class="line">B2=<span class="number">16466113115839228119767887899308820025749260933863446888224167169857612178664139545726340867406790754560227516013796269941438076818194617030304851858351026</span></span><br><span class="line">q=myGetPrime(A2,B2)</span><br><span class="line"></span><br><span class="line">n=<span class="number">85492663786275292159831603391083876175149354309327673008716627650718160585639723100793347534649628330416631255660901307533909900431413447524262332232659153047067908693481947121069070451562822417357656432171870951184673132554213690123308042697361969986360375060954702920656364144154145812838558365334172935931441424096270206140691814662318562696925767991937369782627908408239087358033165410020690152067715711112732252038588432896758405898709010342467882264362733</span></span><br><span class="line"></span><br><span class="line">r=(n//p)//q</span><br><span class="line">phi=(p-<span class="number">1</span>)*(q-<span class="number">1</span>)*(r-<span class="number">1</span>)</span><br><span class="line">e=<span class="number">0x1001</span></span><br><span class="line">d=gmpy2.invert(e,phi)</span><br><span class="line">c=<span class="number">75700883021669577739329316795450706204502635802310731477156998834710820770245219468703245302009998932067080383977560299708060476222089630209972629755965140317526034680452483360917378812244365884527186056341888615564335560765053550155758362271622330017433403027261127561225585912484777829588501213961110690451987625502701331485141639684356427316905122995759825241133872734362716041819819948645662803292418802204430874521342108413623635150475963121220095236776428</span></span><br><span class="line"></span><br><span class="line">m=<span class="built_in">pow</span>(c,d,n)</span><br><span class="line">flag=long_to_bytes(m)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
-<h2 id="rsa-what">RSA &amp; what</h2>
-<p>这道题也不算难，但是最后有个base64隐写之前没见过，吸取线下赛经验，把它记到博客上。</p>
+
+
+
+<h2 id="RSA-what"><a href="#RSA-what" class="headerlink" title="RSA &amp; what"></a>RSA &amp; what</h2><p>这道题也不算难，但是最后有个base64隐写之前没见过，吸取线下赛经验，把它记到博客上。</p>
 <p>首先题目给出了四个文件</p>
-<p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/RSA&amp;What_1.png" alt="RSA&amp;What_1"></p>
+<p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/RSA&What_1.png" alt="RSA&amp;What_1"></p>
 <p>看给出的代码</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randint</span><br><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> powmod</span><br><span class="line"></span><br><span class="line">p = getPrime(<span class="number">2048</span>)</span><br><span class="line">q = getPrime(<span class="number">2048</span>)</span><br><span class="line">N = p*q</span><br><span class="line">Phi = (p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_enc_key</span>(<span class="params">N,Phi</span>):</span><br><span class="line">    e = getPrime(N)</span><br><span class="line">    <span class="keyword">if</span> Phi % e == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> get_enc_key(N, Phi)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> e</span><br><span class="line">e1 = get_enc_key(randint(<span class="number">10</span>, <span class="number">12</span>), Phi)</span><br><span class="line">e2 = get_enc_key(randint(<span class="number">10</span>, <span class="number">12</span>), Phi)</span><br><span class="line"></span><br><span class="line">fr = <span class="built_in">open</span>(<span class="string">r&quot;./base64&quot;</span>, <span class="string">&quot;rb&quot;</span>)<span class="comment">#flag is in this file</span></span><br><span class="line">f1 = <span class="built_in">open</span>(<span class="string">r&quot;./HUB1&quot;</span>, <span class="string">&quot;wb&quot;</span>)</span><br><span class="line">f2 = <span class="built_in">open</span>(<span class="string">r&quot;./HUB2&quot;</span>, <span class="string">&quot;wb&quot;</span>)</span><br><span class="line">base64 = fr.read(<span class="number">255</span>)</span><br><span class="line">f1.write(<span class="string">&quot;%d\n%d\n&quot;</span> % (N, e1))</span><br><span class="line">f2.write(<span class="string">&quot;%d\n%d\n&quot;</span> % (N, e2))</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">len</span>(base64)&gt;<span class="number">0</span>:</span><br><span class="line">    pt = bytes_to_long(base64)</span><br><span class="line">    ct1 = powmod(pt, e1, N)</span><br><span class="line">    ct2 = powmod(pt, e2, N)</span><br><span class="line">    f1.write(<span class="string">&quot;\n%d&quot;</span> % ct1)</span><br><span class="line">    f2.write(<span class="string">&quot;\n%d&quot;</span> % ct2)</span><br><span class="line">    base64 = fr.read(<span class="number">255</span>)</span><br><span class="line">fr.close()</span><br><span class="line">f1.close()</span><br><span class="line">f2.close()</span><br></pre></td></tr></table></figure>
+
 <p>很明显这里用了相同的模数N和两个公钥，加密得出了多个密文，都存放在HUB1和HUB2中，考虑共模攻击：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randint</span><br><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> powmod</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> primefac</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">same_n_attack</span>(<span class="params">n,e1,e2,c1,c2</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">egcd</span>(<span class="params">a,b</span>):</span><br><span class="line">         x, lastX = <span class="number">0</span>, <span class="number">1</span></span><br><span class="line">         y, lastY = <span class="number">1</span>, <span class="number">0</span></span><br><span class="line">         <span class="keyword">while</span> (b != <span class="number">0</span>):</span><br><span class="line">             q = a // b</span><br><span class="line">             a, b = b, a % b</span><br><span class="line">             x, lastX = lastX - q * x, x</span><br><span class="line">             y, lastY = lastY - q * y, y</span><br><span class="line">         <span class="keyword">return</span> (lastX, lastY)</span><br><span class="line">    s = egcd(e1,e2)</span><br><span class="line">    s1 = s[<span class="number">0</span>]</span><br><span class="line">    s2 = s[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> s1 &lt; <span class="number">0</span>:</span><br><span class="line">        s1 = -s1</span><br><span class="line">        c1 = primefac.modinv(c1, n)</span><br><span class="line">        <span class="keyword">if</span> c1 &lt; <span class="number">0</span>:</span><br><span class="line">            c1 += n</span><br><span class="line">    <span class="keyword">elif</span> s2 &lt; <span class="number">0</span>:</span><br><span class="line">        s2 = -s2</span><br><span class="line">        c2 = primefac.modinv(c2, n)</span><br><span class="line">        <span class="keyword">if</span> c2 &lt; <span class="number">0</span>:</span><br><span class="line">            c2 += n</span><br><span class="line">    m = (<span class="built_in">pow</span>(c1, s1, n) * <span class="built_in">pow</span>(c2, s2, n)) % n</span><br><span class="line">    <span class="keyword">return</span> m</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line">f1 = <span class="built_in">open</span>(<span class="string">r&quot;./HUB1&quot;</span>, <span class="string">&quot;r&quot;</span>).readlines()</span><br><span class="line">f2 = <span class="built_in">open</span>(<span class="string">r&quot;./HUB2&quot;</span>, <span class="string">&quot;r&quot;</span>).readlines()</span><br><span class="line">n=<span class="built_in">int</span>(f1[<span class="number">0</span>])</span><br><span class="line">e1=<span class="built_in">int</span>(f1[<span class="number">1</span>])</span><br><span class="line">e2=<span class="built_in">int</span>(f2[<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(e1,e2)</span><br><span class="line">c=<span class="string">&#x27;&#x27;</span></span><br><span class="line">gcd, s, t = gmpy2.gcdext(e1, e2)</span><br><span class="line">flag=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>,<span class="built_in">len</span>(f2)):</span><br><span class="line">    message1 = <span class="built_in">int</span>(f1[i])</span><br><span class="line">    message2 = <span class="built_in">int</span>(f2[i])</span><br><span class="line">    plain = same_n_attack(n,e1,e2,message1,message2)</span><br><span class="line">    c=long_to_bytes(plain)</span><br><span class="line">    flag+=<span class="built_in">str</span>(c)</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line">flag = flag[<span class="number">2</span>:-<span class="number">2</span>].split(<span class="string">&#x27;\\n&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> flag:</span><br><span class="line">    <span class="built_in">print</span>(base64.b64decode(i).decode(<span class="string">&#x27;utf-8&#x27;</span>),end=<span class="string">&#x27; &#x27;</span>)</span><br></pre></td></tr></table></figure>
+
 <p>得到一串字符串</p>
-<p><img src="/2023/05/14/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%951/RSA&amp;What_2.png" alt="2"></p>
+<p><img src="/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%951/RSA&What_2.png" alt="2"></p>
 <p>同时会报错</p>
-<p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/RSA&amp;What_2.png" alt="RSA&amp;What_2"></p>
+<p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/RSA&What_2.png" alt="RSA&amp;What_2"></p>
 <p>一开始不知道为什么报错。输出一下报错的那段密文转换过来的值</p>
-<p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/RSA&amp;What_4.png" alt="RSA&amp;What_4"></p>
-<p>这里卡了很久，还以为题目出问题了。之后上网搜索才发现是因为这道题就是这样出的，它用了base64隐写，<a target="_blank" rel="noopener" href="https://.com.cn">base64</a>的隐写发在这里了。</p>
+<p><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/RSA&What_4.png" alt="RSA&amp;What_4"></p>
+<p>这里卡了很久，还以为题目出问题了。之后上网搜索才发现是因为这道题就是这样出的，它用了base64隐写，<a target="_blank" rel="noopener" href="https://.com.cn/">base64</a>的隐写发在这里了。</p>
 <p>直接用脚本就可以，最后得到7c86d8f7d6de33a87f7f9d6b005ce640，包上flag{}提交</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://yzsandw.com">yz的博客</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yzsandw.com/2023/05/14/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%951/">http://yzsandw.com/2023/05/14/buu刷题记录1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yzsandw.com" target="_blank">Welcom</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">刷题记录</a></div><div class="post_share"><div class="social-share" data-image="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/buu刷题记录.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/05/14/%E6%9C%89%E5%85%B3rsa/" title="有关rsa"><img class="cover" src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/有关rsa.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">有关rsa</div></div></a></div><div class="next-post pull-right"><a href="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/" title="奇奇怪怪的密码"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">奇奇怪怪的密码</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Utterances</span><span class="switch-btn"></span><span class="second-comment">Gitalk</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.postimg.cc/SsrHG3pr/preview.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">yz的博客</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎大家指出文章错误到邮箱:yzsandw@gmail.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">刷题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#afctf2018-%E5%8F%AF%E6%80%9C%E7%9A%84rsa"><span class="toc-number">1.1.</span> <span class="toc-text">[AFCTF2018]可怜的RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#roarctf2019-babyrsa"><span class="toc-number">1.2.</span> <span class="toc-text">[RoarCTF2019]babyRSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa-what"><span class="toc-number">1.3.</span> <span class="toc-text">RSA &amp; what</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/21/%E5%8F%AF%E4%BF%A1%E8%AE%A1%E7%AE%97%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0%E9%9B%86/" title="可信计算论文学习集">可信计算论文学习集</a><time datetime="2024-11-21T09:21:53.000Z" title="发表于 2024-11-21 17:21:53">2024-11-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/20/%E5%8F%AF%E4%BF%A1%E8%AE%A1%E7%AE%973-0/" title="可信计算3.0">可信计算3.0</a><time datetime="2024-11-20T05:51:31.000Z" title="发表于 2024-11-20 13:51:31">2024-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/19/%E5%8F%AF%E4%BF%A1%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0/" title="可信计算学习"><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/可信计算.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="可信计算学习"/></a><div class="content"><a class="title" href="/2024/11/19/%E5%8F%AF%E4%BF%A1%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0/" title="可信计算学习">可信计算学习</a><time datetime="2024-11-19T03:44:18.000Z" title="发表于 2024-11-19 11:44:18">2024-11-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/02/5G-%E5%A4%A7%E5%94%90%E6%9D%AF%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="5G-大唐杯学习记录">5G-大唐杯学习记录</a><time datetime="2024-04-02T09:43:33.000Z" title="发表于 2024-04-02 17:43:33">2024-04-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/21/ccf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" title="ccf刷题记录">ccf刷题记录</a><time datetime="2024-03-21T10:04:53.000Z" title="发表于 2024-03-21 18:04:53">2024-03-21</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/buu刷题记录.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By yz的博客</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
-  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
-    btf.wrap(item, 'div', { class: 'katex-wrap'})
-  })
-})()</script><script>function loadUtterances () {
-  let ele = document.createElement('script')
-  ele.setAttribute('id', 'utterances_comment')
-  ele.setAttribute('src', 'https://utteranc.es/client.js')
-  ele.setAttribute('repo', 'yzsandw/yzsandw.github.io')
-  ele.setAttribute('issue-term', 'pathname')
-  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
-  ele.setAttribute('theme', nowTheme)
-  ele.setAttribute('crossorigin', 'anonymous')
-  ele.setAttribute('async', 'true')
-  document.getElementById('utterances-wrap').insertAdjacentElement('afterbegin',ele)
-}
-
-function utterancesTheme () {
-  const iframe = document.querySelector('.utterances-frame')
-  if (iframe) {
-    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
-    const message = {
-      type: 'set-theme',
-      theme: theme
-    };
-    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://yzsandw.com">yz的博客</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://yzsandw.com/2023/05/14/buu%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%951/">http://yzsandw.com/2023/05/14/buu刷题记录1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://yzsandw.com" target="_blank">Welcom</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">刷题记录</a></div><div class="post-share"><div class="social-share" data-image="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/buu刷题记录.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2023/05/14/%E6%9C%89%E5%85%B3rsa/" title="有关rsa"><img class="cover" src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/有关rsa.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">有关rsa</div></div><div class="info-2"><div class="info-item-1">Rsa基础知识rsa是经常出现在ctf考题中的一类题，它是基于大素因数分解难题产生的公钥密码  数学基础素数素数又叫质数，除了1和其本身，不能被其他数整除的数叫做素数 模运算模运算是取余运算，其符号为$mod$ 同余两个数$a$，$b$ 对同一个数$m$取余结果相同，则称$a$与$b$模$m$同余 互质当两个正整数除了1之外没有其他公因子，我们就称这两个数互质 任意两个质数一定互质 欧拉函数数论中，对正整数$n$，欧拉函数$\varphi(n)$指的是小于或等于$n$的正整数中与$n$互质的数 易知质数$n$的欧拉函数是$n-1$ 若不是质数，其欧拉函数有公式： 欧拉定理若两个正整数$a,\ n$互质，则如下等式成立 $$a^{\varphi(n)}\equiv1\mod{n}$$ 费马小定理是欧拉定理的特例，当$n$是质数并且$a$和$n$互质 $$a^{p-1}\equiv1\mod{p}$$ 模逆元对整数$a,b$，若 $ab\equiv1\mod{n}$ 则称 $a$ 和 $b$ 关于模 $n$...</div></div></div></a><a class="pagination-related" href="/2023/05/07/%E5%A5%87%E5%A5%87%E6%80%AA%E6%80%AA%E7%9A%84%E5%AF%86%E7%A0%81/" title="奇奇怪怪的密码"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">奇奇怪怪的密码</div></div><div class="info-2"><div class="info-item-1">做密码题或者杂项题老是遇到一些奇奇怪怪的密码，记录一下积累的密码 1.图形密码猪圈密码这个很常见，直接贴图  圣堂武士密码-猪圈变形1猪圈密码的变形  银河密码 福尔摩斯–跳舞的小人 精灵语 猪圈变形2 猪圈变形3 夏多密码 </div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Utterances</span><span id="switch-btn"></span><span class="second-comment">Gitalk</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://i.postimg.cc/SsrHG3pr/preview.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">yz的博客</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">刷题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AFCTF2018-%E5%8F%AF%E6%80%9C%E7%9A%84RSA"><span class="toc-number">1.1.</span> <span class="toc-text">[AFCTF2018]可怜的RSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RoarCTF2019-babyRSA"><span class="toc-number">1.2.</span> <span class="toc-text">[RoarCTF2019]babyRSA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA-what"><span class="toc-number">1.3.</span> <span class="toc-text">RSA &amp; what</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/21/%E5%8F%AF%E4%BF%A1%E8%AE%A1%E7%AE%97%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0%E9%9B%86/" title="可信计算论文学习集">可信计算论文学习集</a><time datetime="2024-11-21T09:21:53.000Z" title="发表于 2024-11-21 17:21:53">2024-11-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/20/%E5%8F%AF%E4%BF%A1%E8%AE%A1%E7%AE%973-0/" title="可信计算3.0">可信计算3.0</a><time datetime="2024-11-20T05:51:31.000Z" title="发表于 2024-11-20 13:51:31">2024-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/19/%E5%8F%AF%E4%BF%A1%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0/" title="可信计算学习"><img src="https://yzsandwimages.oss-cn-beijing.aliyuncs.com/img/可信计算.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="可信计算学习"/></a><div class="content"><a class="title" href="/2024/11/19/%E5%8F%AF%E4%BF%A1%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0/" title="可信计算学习">可信计算学习</a><time datetime="2024-11-19T03:44:18.000Z" title="发表于 2024-11-19 11:44:18">2024-11-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/02/5G-%E5%A4%A7%E5%94%90%E6%9D%AF%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="5G-大唐杯学习记录">5G-大唐杯学习记录</a><time datetime="2024-04-02T09:43:33.000Z" title="发表于 2024-04-02 17:43:33">2024-04-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/21/ccf%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" title="ccf刷题记录">ccf刷题记录</a><time datetime="2024-03-21T10:04:53.000Z" title="发表于 2024-03-21 18:04:53">2024-03-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By yz的博客</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat-btn" type="button" title="聊天"><i class="fas fa-message"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
   }
-}
 
-if ('Utterances' === 'Utterances' || !false) {
-  if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
-  else loadUtterances()
-} else {
-  function loadOtherComment () {
-    loadUtterances()
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (false) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
   }
-}</script><script>function addGitalkSource () {
-  const ele = document.createElement('link')
-  ele.rel = 'stylesheet'
-  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
-  document.getElementsByTagName('head')[0].appendChild(ele)
-}
 
-function loadGitalk () {
-  function initGitalk () {
-    var gitalk = new Gitalk(Object.assign({
+  showKatex()
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+  const getUtterancesTheme = theme => theme === 'dark' ? 'photon-dark' : 'github-light'
+
+  const loadUtterances = (el = document, key) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyUtterances = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const config = {
+      src: 'https://utteranc.es/client.js',
+      repo: 'yzsandw/yzsandw.github.io',
+      theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      'issue-term': isShuoshuo ? key : (option && option['issue-term']) || 'pathname'
+    }
+
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+    el.querySelector('#utterances-wrap').appendChild(ele)
+  }
+
+  const changeUtterancesTheme = theme => {
+    const iframe = document.querySelector('#utterances-wrap iframe')
+    if (iframe) {
+      const message = {
+        type: 'set-theme',
+        theme: getUtterancesTheme(theme)
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+  if (isShuoshuo) {
+    'Utterances' === 'Utterances'
+      ? window.shuoshuoComment = { loadComment: loadUtterances }
+      : window.loadOtherComment = loadUtterances
+    return
+  }
+  
+  if ('Utterances' === 'Utterances' || !false) {
+    if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
       clientID: '28dd598981c595459952',
       clientSecret: 'a82c85f8b3575c923e14858ab7ec81325055d1ae',
       repo: 'yzsandw.github.io',
       owner: 'yzsandw',
       admin: ['yzsandw'],
-      id: 'e6565485b801bdad1a82e14ad2df92ef',
-      updateCountCallback: commentCount
-    },null))
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || 'e6565485b801bdad1a82e14ad2df92ef'
+    })
 
     gitalk.render('gitalk-container')
   }
 
-  if (typeof Gitalk === 'function') initGitalk()
-  else {
-    addGitalkSource()
-    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
   }
-}
 
-function commentCount(n){
-  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
-  if (isCommentCount) {
-    isCommentCount.innerHTML= n
+  if (isShuoshuo) {
+    'Utterances' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
   }
-}
 
-if ('Utterances' === 'Gitalk' || !false) {
-  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
-  else loadGitalk()
-} else {
-  function loadOtherComment () {
-    loadGitalk()
+  if ('Utterances' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
   }
-}</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
-POWERMODE.shake = true;
-POWERMODE.mobile = true;
-document.body.addEventListener('input', POWERMODE);
-</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script src="//code.tidio.co/dlol5tpuqil9u04llnhzewqjwkbr02vi.js" async="async"></script><script>function onTidioChatApiReady() {
-  window.tidioChatApi.hide();
-  window.tidioChatApi.on("close", function() {
-    window.tidioChatApi.hide();
-  });
-}
-if (window.tidioChatApi) {
-  window.tidioChatApi.on("ready", onTidioChatApiReady);
-} else {
-  document.addEventListener("tidioChat-ready", onTidioChatApiReady);
-}
+})()</script></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="//code.tidio.co/dlol5tpuqil9u04llnhzewqjwkbr02vi.js" async="async"></script><script>(() => {
+  const isChatBtn = true
+  const isChatHideShow = false
 
-var chatBtnFn = () => {
-  document.getElementById("chat_btn").addEventListener("click", function(){
-    window.tidioChatApi.show();
-    window.tidioChatApi.open();
-  });
-}
-chatBtnFn()
-</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+  if (isChatBtn) {
+    let isShow = false
+    const close = () => {
+      window.tidioChatApi.hide()
+      isShow = false
+    }
+    
+    const open = () => {
+      window.tidioChatApi.open()
+      window.tidioChatApi.show()
+      isShow = true
+    }
+
+    const onTidioChatApiReady = () => {
+      window.tidioChatApi.hide()
+      window.tidioChatApi.on("close", close)
+    }
+    if (window.tidioChatApi) {
+      window.tidioChatApi.on("ready", onTidioChatApiReady)
+    } else {
+      document.addEventListener("tidioChat-ready", onTidioChatApiReady)
+    }
+
+    window.chatBtnFn = () => {
+      if (!window.tidioChatApi) return
+      isShow ? close() : open()
+    }
+  } else if (isChatHideShow) {
+    window.chatBtn = {
+      hide: () => window.tidioChatApi && window.tidioChatApi.hide(),
+      show: () => window.tidioChatApi && window.tidioChatApi.show()
+    }
+  }
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
